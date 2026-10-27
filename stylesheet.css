@@ -1,0 +1,198 @@
+:root {
+  --text: #f5fff0;
+  --nav-bar: #405d27;
+  --nav-active: #82b74b;
+  --nav-active-label: #ffffff;
+}
+
+body {
+  background-color: #1f1f1f;
+  color: #ffffff;
+  margin: 0;
+}
+
+.scene {
+  height: 900vh;
+}
+
+.cat0 {
+  --vanishing-x: 80%;
+  --vanishing-y: 55%;
+  position: sticky;
+  top: 0;
+  height: 100vh;
+  display: grid;
+  overflow: hidden;
+  isolation: isolate;
+}
+
+.cat0 > div {
+  grid-area: 1 / 1;
+  min-width: 0;
+  min-height: 0;
+  --size: 1;
+  transform-origin: var(--vanishing-x) var(--vanishing-y);
+  transform:
+    translate(
+      calc(var(--x, 0px) * var(--projection, 1)),
+      calc(var(--y, 0px) * var(--projection, 1))
+    )
+    scale(calc(var(--size) * var(--projection, 1)));
+  visibility: var(--layer-visibility, visible);
+}
+
+.cat0 > div img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.cat {
+  z-index: 10;
+   --depth: 4;
+}
+
+/* Depth is distance from the starting camera; smaller values are nearer. */
+.cat1 {
+  z-index: 20;
+  --depth: 4;
+}
+
+.cat2 {
+  z-index: 21;
+  --depth: 1.6;
+}
+
+.cat3 {
+  z-index: 22;
+  --depth: 1.4;
+}
+
+.cat4 {
+  z-index: 23;
+  --depth: 1.2;
+}
+
+.cat0 > :is(.turna, .turna1, .turna2) {
+  opacity: calc(
+    1 - clamp(
+      0,
+      (var(--tree-progress, 0) - var(--fade-start)) /
+      (var(--fade-end) - var(--fade-start)),
+      1
+    )
+  );
+  --size: 0.015;
+  transform-origin: 0% 50%;
+  transform:
+    translate(
+      calc(var(--x) + (var(--end-x) - var(--x)) * var(--placement-progress, 0)),
+      calc(var(--y) + (var(--end-y) - var(--y)) * var(--placement-progress, 0))
+    )
+    scale(calc(
+      var(--size) *
+      (1 + var(--placement-progress, 0) * var(--zoom)) *
+      (1 + var(--tree-progress, 0) * 8)
+    ));
+}
+
+
+
+.turna {
+  z-index: 30;
+  --zoom: 45;
+  --x: -15vw;
+  --y: 10vh;
+  --end-x: 0vw;
+  --end-y: 10vh;
+  --fade-start: 0;
+  --fade-end: 0.1;
+}
+
+.turna1 {
+  z-index: 31;
+  --zoom: 55;
+  --x: 0px;
+  --y: -15vh;
+  --end-x: 5px;
+  --end-y: 7vh;
+  --fade-start: 0;
+  --fade-end: 0.1;
+}
+
+.turna2 {
+  z-index: 32;
+  --zoom: 65;
+  --x: 25vw;
+  --y: 10vh;
+  --end-x: 2vw;
+  --end-y: 10vh;
+  --fade-start: 0.1;
+  --fade-end: 0.2;
+}
+
+.cat0 > :is(.treesky, .agacsun, .treeground, .tree) {
+  transform:
+    translate(
+      calc(
+        var(--x, 0px) +
+        (var(--end-x, var(--x, 0px)) - var(--x, 0px)) * var(--tree-progress, 0)
+      ),
+      calc(
+        var(--y, 0px) +
+        (var(--end-y, var(--y, 0px)) - var(--y, 0px)) * var(--tree-progress, 0)
+      )
+    )
+    scale(calc(var(--size) * var(--projection, 1)));
+}
+
+.treesky {
+  z-index: 2;
+  --depth: 17;
+}
+
+.agacsun {
+  z-index: 3;
+  --depth: 16;
+  --end-x: 12vw;
+  --end-y: 20vh;
+}
+
+.treeground {
+  z-index: 5;
+  --depth: 18;
+  --end-x: 12vw;
+  --end-y: 20vh;
+}
+
+.tree {
+  z-index: 7;
+  --depth: 22;
+  --end-x: 12vw;
+  --end-y: 20vh;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .scene {
+    height: 100vh;
+  }
+
+  .cat0 {
+    position: relative;
+  }
+
+  .cat0 > div,
+  .cat0 > :is(.turna, .turna1, .turna2),
+  .cat0 > :is(.treesky, .agacsun, .treeground, .tree) {
+    transform: none;
+  }
+
+  .cat0 > :is(.cat1, .cat2, .cat3, .cat4, .turna, .turna1, .turna2) {
+    visibility: hidden;
+  }
+
+  .cat0 > :is(.treesky, .agacsun, .treeground, .tree) {
+    visibility: visible;
+  }
+}

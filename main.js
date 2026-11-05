@@ -66,3 +66,11 @@ window.addEventListener("resize", () => {
 reducedMotion.addEventListener("change", scheduleZoom);
 measureLayers();
 updateZoom();
+const scrollIndicator = document.getElementById("scroll");
+
+function updateScrollIndicator() {
+  scrollIndicator.classList.toggle("hidden", window.scrollY > 20);
+}
+
+window.addEventListener("scroll", updateScrollIndicator, { passive: true });
+updateScrollIndicator();

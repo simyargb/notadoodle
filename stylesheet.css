@@ -1,3 +1,12 @@
+
+.google-sans-body {
+  font-family: "Google Sans", sans-serif;
+  font-optical-sizing: auto;
+  font-weight: 400;
+  font-style: normal;
+  font-variation-settings:
+    "GRAD" 0;
+}
 :root {
   --text: #f5fff0;
   --nav-bar: #405d27;
@@ -11,8 +20,65 @@ body {
   margin: 0;
 }
 
+html {
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+
+html::-webkit-scrollbar {
+  display: none;
+}
+
 .scene {
   height: 900vh;
+
+}
+
+#scroll {
+  position: fixed;
+  right: 24px;
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 9999;
+  justify-content: center;
+  place-items: center;
+  background: transparent;
+  opacity:1;
+  transition: opacity 0.3s ease;
+}
+
+#scroll.hidden {
+  opacity: 0;
+  pointer-events: none;
+}
+
+#scrolltxt {
+    font-family: "Google Sans", sans-serif;
+    font-weight: 250;
+    font-size: 18px;
+    color: #c1e8fb;
+    margin-top: 8px;
+    margin-bottom: 8px;
+}
+
+#imgup {
+  display: block;
+  width: 44px;
+  height: 54px;
+  margin-bottom: 12px;
+ 
+  background: url('up.svg') no-repeat center center;
+  background-size: contain;
+}
+
+#imgdown {
+  display: block;
+  width: 44px;
+  height: 54px;
+  margin-top:12px;
+
+  background: url('down.svg') no-repeat center center;
+  background-size: contain;
 }
 
 .cat0 {
@@ -96,8 +162,6 @@ body {
       (1 + var(--tree-progress, 0) * 8)
     ));
 }
-
-
 
 .turna {
   z-index: 30;
